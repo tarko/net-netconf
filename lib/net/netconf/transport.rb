@@ -114,7 +114,9 @@ module Netconf
       # nice "compromise" ... just don't know what it does 
       # performance-wise on large datasets.
 
-      rsp_nx.traverse{ |n| n.namespace = nil }
+      if @args[:scrub_namespaces]
+        rsp_nx.traverse{ |n| n.namespace = nil }
+      end
       
       # set the response context to the root node; <rpc-reply>
       
