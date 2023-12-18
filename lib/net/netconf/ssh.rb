@@ -55,12 +55,10 @@ module Netconf
       # the #loop method
       
       @trans[:chan].on_data do |ch, data|
-        if data.include?( RPC::MSG_END )
-          data.slice!( RPC::MSG_END )
-          @trans[:rx_buf] << data unless data.empty?
+        @trans[:rx_buf] << data unless data.empty?
+        if @trans[:rx_buf].include?( RPC::MSG_END )
+          @trans[:rx_buf].slice!( RPC::MSG_END )
           @trans[:more] = false
-        else
-          @trans[:rx_buf] << data
         end
       end
       
