@@ -114,7 +114,9 @@ module Netconf
       # nice "compromise" ... just don't know what it does 
       # performance-wise on large datasets.
 
-      if @args[:scrub_namespaces]
+      if @args[:scrub_all_namespaces]
+        rsp_nx.remove_namespaces!
+      elsif @args[:scrub_namespaces]
         rsp_nx.traverse{ |n| n.namespace = nil }
       end
       
